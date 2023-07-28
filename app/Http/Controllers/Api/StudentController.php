@@ -70,5 +70,16 @@ class StudentController extends Controller
 //            'status'=> 'success',
             'students' =>$dataStudent
         ],200);
+        // tự tạo 1 bảng product id,name,price,color
+        // viết 1 api có tên  product truyền lên những param bắt buộc sau offset,limit (validate)
+        // nếu  có 1 cái param :type
+        // nếu như type : price
+        // bắt buộc truyền lên truyền lên param priceMin,priceMax và lọc theo giá trong khoảng
+        // nếu như type : color
+        // bắt buộc truyền lên param color và color này phải lọc được nhiều màu
+        //nếu như type : name
+        // bắt buộc truyền lên param name và tìm gần đúng theo tên
+        // còn nếu ko có param type thì thôi lấy danh sách sản phẩm theo offset, limit
+
     }
 }
