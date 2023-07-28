@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
@@ -38,7 +39,8 @@ class StudentController extends Controller
         //status là 1 dạng chuẩn chung quy đinh giữa frontend và backend
         //status fails | success
         $validator = Validator::make($request->all(),[
-           'name'=>'required|string',
+          'limit'=>'required',
+          'offset'=>'required'
 //            'email'=>'required'
         ]);
         if ($validator->fails()) {
@@ -49,9 +51,21 @@ class StudentController extends Controller
             ],400);
 
         }
-        //
-        $dataStudent = Student::where('name','LIKE','%'.$request->name.'%')->get();
-//        $dataStudent = Student::all();
+        //viết API hiển thị danh sách sinh viên theo limit offset (limit offset bắt buộc phải có param)
+        // nếu tồn tại param name thì sẽ search theo tên , nếu tồn tại param email thì sẽ search theo
+        // param email nếu vừa tồn tại param name và vừa tồn tại param email thì sẽ search theo cả 2
+        // nếu không tồn tại param nào thì chỉ lấy danh sách sinh viên theo limit và offest
+        $query = DB::table('students');
+        if ($request->name) {
+            $query->where('name','LIKE','%'.$request->name.'%');
+        }
+        if ($request->email) {
+            $query->where('email','LIKE','%'.$request->email.'%');
+        }
+
+        $dataStudent = $query->limit($request->limit)
+            ->offset($request->offset)
+            ->get();
         return response()->json([
 //            'status'=> 'success',
             'students' =>$dataStudent
