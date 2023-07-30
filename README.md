@@ -65,3 +65,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # wd17311_PHP3
+#tạo controler resouce
+#php artisan make:controller ProductController --api
+#php artisan make:resource Products --collection
+#php artisan make:resource ProductCollection
+#php artisan make:resource UserResource
+#php artisan route:list --name=products
+
+
